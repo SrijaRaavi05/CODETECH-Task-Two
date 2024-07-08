@@ -1,0 +1,118 @@
+//MOORE MACHINE //Cyclic lamp
+module cyclic_lamp(
+    input clk,
+    output reg [2:0] light
+    );
+    parameter S0=0,S1=1,S2=2; //states
+    parameter R=3'b100, G=3'b010, Y=3'b001; //red(R), green(G), yellow(Y)
+    reg [1:0] state;
+    always@(posedge clk)
+    case(state)
+    S0:state<=S1;
+    S1:state<=S2;
+    S2:state<=S0;
+    default:state<=S0;
+    endcase
+    always@(state)
+    case(state)
+    S0:light = R;
+    S1:light = G;
+    S2:light = Y;
+    endcase
+endmodule
+//TEST BENCH:
+module cyclic_lamp_tb();
+reg clk;
+wire [2:0] light;
+cyclic_lamp cl(clk,light);
+always #5 clk = ~clk; //clock with a time period of 10ns
+initial
+begin
+clk = 1'b0; //initially clock is set to low
+#100 $finish; 
+end
+initial
+begin
+$dumpfile("cyclic_lamp.vcd"); //dumping file
+$dumpvars(0,cyclic_lamp_tb); //dumping variables
+$monitor($time," RGY : %b",light); //displaying output
+end
+endmodule
+//OUTPUT:
+		   0 RGY : xxx
+                   5 RGY : 100
+                  15 RGY : 010
+                  25 RGY : 001
+                  35 RGY : 100
+                  45 RGY : 010
+                  55 RGY : 001
+                  65 RGY : 100
+                  75 RGY : 010
+                  85 RGY : 001
+                  95 RGY : 100
+$finish called at time : 100 ns 
+
+//MEALY MACHINE //Sequence detector for 0110
+module seq_det(
+    input in,
+    input clk,
+    input reset,
+    output reg out
+    );
+    parameter S0 = 0, S1 = 1, S2 = 2, S3 = 3; //states
+    reg [1:0] PS, NS; //present state(PS), next state(NS)
+    always @ (posedge clk, posedge reset)
+    if(reset) PS <= S0;
+    else      PS <= NS;
+    always @ (PS, in)
+    case(PS)
+    S0 : begin
+         out = 0;
+         NS = in ? S0 : S1;
+         end
+    S1 : begin
+         out = 0;
+         NS = in ? S2 : S1;
+         end
+    S2 : begin
+         out = 0;
+         NS = in ? S3 : S1;
+         end
+    S3 : begin
+         out = in ? 0 : 1;
+         NS = in ? S0 : S1;
+         end
+    endcase
+endmodule
+//TEST BENCH:
+module seq_det_tb();
+    reg in, clk, rst;
+    wire out;
+    seq_det s1(.in(in), .clk(clk), .reset(rst), .out(out));
+    initial
+    begin
+    $dumpfile("seg_det.vcd"); //dumping file
+    $dumpvars(0, seq_det_tb); //dumping variables
+    clk = 1'b0; // initially clock is set to low
+    rst = 1'b1; //initially reset is set to high
+    #15 rst = 1'b0; //reset is low
+    end
+    always #5 clk = ~clk; //clock with a time period of 10ns
+    initial
+    begin //entering input sequence
+    #10 in = 0;
+    #10 in = 1;
+    #10 in = 0;
+    #10 in = 1;
+    #10 in = 1;
+    #10 in = 0;
+    #10 in = 1;
+    #10 in = 1;
+    #10 in = 0;
+    #10 in = 1;
+    #10 in = 0;
+    #10 in = 1;
+    #10 in = 1;
+    #10 $finish;
+    end
+endmodule
