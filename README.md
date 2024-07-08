@@ -22,3 +22,15 @@ Key Activities:
  
 Technology Used: Xilinx vivado 2024.1 software.
 
+
+TEXT
+
+MOORE MACHINE SCHEMATIC:
+
+![FSM_SCH 1](https://github.com/SrijaRaavi05/CODETECH-Task-Two/assets/174895529/764f1f9f-3e9d-48c2-a8db-ee141477c3b0)
+
+OUTPUT:
+
+![fsm sim 1](https://github.com/SrijaRaavi05/CODETECH-Task-Two/assets/174895529/aff91331-1dc9-4d82-99c9-c37b048d61a9)
+
+
