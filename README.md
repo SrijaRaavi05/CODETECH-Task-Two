@@ -33,4 +33,14 @@ OUTPUT:
 
 ![fsm sim 1](https://github.com/SrijaRaavi05/CODETECH-Task-Two/assets/174895529/aff91331-1dc9-4d82-99c9-c37b048d61a9)
 
+MEALY MACHINE SCHEMATIC:
+
+![FSM1_SCH 1](https://github.com/SrijaRaavi05/CODETECH-Task-Two/assets/174895529/6c30517a-7e18-435e-89f7-19db88f05ff8)
+
+OUTPUT:
+
+![FSM1 SIM 1](https://github.com/SrijaRaavi05/CODETECH-Task-Two/assets/174895529/12303b33-ee49-43cd-a01e-4162c9602df4)
+
+
+
 
